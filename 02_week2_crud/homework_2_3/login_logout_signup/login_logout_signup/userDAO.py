@@ -31,6 +31,7 @@ class UserDAO:
         self.users = self.db.users
         self.SECRET = 'verysecret'
 
+
     # makes a little salt
     def make_salt(self):
         salt = ""
@@ -55,8 +56,11 @@ class UserDAO:
         try:
             # XXX HW 2.3 Students Work Here
             # you will need to retrieve right document from the users collection.
-            print "This space intentionally left blank."
-        except:
+            # self.sess
+            user = self.users.find_one({'_id': username})
+
+        except Exception as e:
+            print "Error of", type(e), e
             print "Unable to query database for user"
 
         if user is None:
@@ -86,6 +90,8 @@ class UserDAO:
             # You need to insert the user into the users collection.
             # Don't over think this one, it's a straight forward insert.
 
+            self.users.insert_one(user)
+            print "Inserted user", user, "into DB"
             print "This space intentionally left blank."
 
         except pymongo.errors.OperationFailure:
